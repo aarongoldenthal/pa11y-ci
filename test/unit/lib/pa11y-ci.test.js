@@ -151,9 +151,9 @@ describe('lib/pa11y-ci', () => {
 				assert.calledWithMatch(log.info, /3 URLs/i);
 			});
 
-			it('logs the number of errors for each URL, or if they fail to run', () => {
-				assert.calledWithMatch(log.info, /foo-url.*0 errors/i);
-				assert.calledWithMatch(log.error, /bar-url.*1 errors/i);
+			it('logs the number of issues for each URL, or if they fail to run', () => {
+				assert.calledWithMatch(log.info, /foo-url.*0 issues/i);
+				assert.calledWithMatch(log.error, /bar-url.*1 issues/i);
 				assert.calledWithMatch(log.error, /baz-url.*failed to run/i);
 			});
 
@@ -225,10 +225,10 @@ describe('lib/pa11y-ci', () => {
 					}).catch(done);
 				});
 
-				it('logs zero errors for each URL', () => {
-					assert.calledWithMatch(log.info, /foo-url.*0 errors/i);
-					assert.calledWithMatch(log.info, /bar-url.*0 errors/i);
-					assert.calledWithMatch(log.info, /baz-url.*0 errors/i);
+				it('logs zero issues for each URL', () => {
+					assert.calledWithMatch(log.info, /foo-url.*0 issues/i);
+					assert.calledWithMatch(log.info, /bar-url.*0 issues/i);
+					assert.calledWithMatch(log.info, /baz-url.*0 issues/i);
 				});
 
 				it('logs the pass/fail ratio', () => {
@@ -310,8 +310,8 @@ describe('lib/pa11y-ci', () => {
 				assert.callCount(mockBrowser.close, 1);
 			});
 
-			it('correctly logs the number of errors for the URL', () => {
-				assert.calledWithMatch(log.info, /qux-url.*1 errors/i);
+			it('correctly logs the number of issues for the URL', () => {
+				assert.calledWithMatch(log.info, /qux-url.*1 issues/i);
 			});
 
 			describe('resolved object', () => {
