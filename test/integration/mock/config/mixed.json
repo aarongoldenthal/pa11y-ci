@@ -1,6 +1,6 @@
 {
 	"urls": [
-		"http://notahost:8090/erroring-1",
+		"http://-invalidurl.com/erroring-1",
 		"http://localhost:8090/failing-1",
 		"http://localhost:8090/passing-1"
 	]
