@@ -85,7 +85,8 @@ describe('lib/pa11y-ci', () => {
 			userUrls = [
 				'foo-url',
 				'bar-url',
-				'baz-url'
+				'baz-url',
+				'foo-url'
 			];
 			userOptions = {
 				concurrency: 4,
@@ -150,14 +151,14 @@ describe('lib/pa11y-ci', () => {
 			});
 
 			it('Runs the Pa11y test runner on each of the URLs', () => {
-				assert.callCount(pa11y, 3);
+				assert.callCount(pa11y, 4);
 				assert.calledWith(pa11y, 'foo-url');
 				assert.calledWith(pa11y, 'bar-url');
 				assert.calledWith(pa11y, 'baz-url');
 			});
 
 			it('logs that the tests have started running', () => {
-				assert.calledWithMatch(log.info, /3 URLs/i);
+				assert.calledWithMatch(log.info, /4 URLs/i);
 			});
 
 			it('logs the number of errors for each URL, or if they fail to run', () => {
@@ -167,7 +168,7 @@ describe('lib/pa11y-ci', () => {
 			});
 
 			it('logs the pass/fail ratio', () => {
-				assert.calledWithMatch(log.error, /1\/3 urls passed/i);
+				assert.calledWithMatch(log.error, /2\/4 urls passed/i);
 			});
 
 			it('logs the errors for each URL that has some', () => {
@@ -189,7 +190,7 @@ describe('lib/pa11y-ci', () => {
 				});
 
 				it('has a `passes` property set to the total number of URLs that passed the test', () => {
-					assert.strictEqual(report.passes, 1);
+					assert.strictEqual(report.passes, 2);
 				});
 
 				it('has a `results` property set to an object where keys are URLs and values are their results', () => {
@@ -205,6 +206,11 @@ describe('lib/pa11y-ci', () => {
 					assert.isArray(report.results['baz-url']);
 					assert.lengthEquals(report.results['baz-url'], 1);
 					assert.strictEqual(report.results['baz-url'][0], pa11yError);
+				});
+
+				it('appends a count to the `results` key for duplicate URLs', () => {
+					assert.isArray(report.results['foo-url (2)']);
+					assert.lengthEquals(report.results['foo-url (2)'], 0);
 				});
 
 			});
@@ -246,7 +252,7 @@ describe('lib/pa11y-ci', () => {
 				});
 
 				it('logs the pass/fail ratio', () => {
-					assert.calledWithMatch(log.info, /3\/3 urls passed/i);
+					assert.calledWithMatch(log.info, /4\/4 urls passed/i);
 				});
 
 				it('never logs any errors', () => {
