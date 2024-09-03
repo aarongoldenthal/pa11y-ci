@@ -31,7 +31,7 @@
     "lodash": "^4.17.21",
     "node-fetch": "^2.7.0",
     "pa11y": "^8.0.0",
-    "protocolify": "^3.0.0",
+    "protocolify": "^4.0.0",
     "puppeteer": "^23.2.1",
     "wordwrap": "^1.0.0"
   },
