@@ -1,6 +1,6 @@
 {
   "name": "pa11y-ci",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "description": "Pa11y CI is a CI-centric accessibility test runner, built using Pa11y",
   "keywords": [
     "accessibility",
@@ -10,7 +10,8 @@
   ],
   "author": "Team Pa11y",
   "contributors": [
-    "Rowan Manning (https://rowanmanning.com/)"
+    "Rowan Manning (https://rowanmanning.com/)",
+    "Aaron Goldenthal (https://github.com/aarongoldenthal)"
   ],
   "repository": {
     "type": "git",
@@ -20,29 +21,29 @@
   "bugs": "https://github.com/pa11y/pa11y-ci/issues",
   "license": "LGPL-3.0-only",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "dependencies": {
-    "async": "~3.2.5",
-    "cheerio": "~1.0.0-rc.12",
-    "commander": "~11.1.0",
+    "async": "~3.2.6",
+    "cheerio": "~1.1.2",
+    "commander": "~14.0.0",
     "globby": "~6.1.0",
     "kleur": "~4.1.5",
     "lodash": "~4.17.21",
     "node-fetch": "~2.7.0",
-    "pa11y": "^7.0.0",
+    "pa11y": "^9.0.0",
     "protocolify": "~3.0.0",
-    "puppeteer": "^20.9.0",
+    "puppeteer": "^24.7.2",
     "wordwrap": "~1.0.0"
   },
   "devDependencies": {
-    "eslint": "^8.56.0",
-    "mocha": "^10.3.0",
+    "eslint": "^8.57.1",
+    "mocha": "^11.1.0",
     "mockery": "^2.1.0",
-    "nyc": "^15.1.0",
+    "nyc": "^17.1.0",
     "pa11y-lint-config": "^3.0.0",
     "proclaim": "^3.6.0",
-    "sinon": "^17.0.1"
+    "sinon": "^20.0.0"
   },
   "main": "./lib/pa11y-ci.js",
   "bin": {
@@ -51,9 +52,9 @@
   "scripts": {
     "lint": "eslint .",
     "verify-coverage": "nyc check-coverage --lines 90 --functions 90 --branches 90",
-    "test-unit": "mocha --file test/unit/setup.test.js 'test/unit/**/*.test.js' --recursive",
-    "test-coverage": "nyc --reporter=text --reporter=html mocha --file test/unit/setup.test.js 'test/unit/**/*.test.js' --recursive",
-    "test-integration": "mocha --file test/integration/setup.test.js 'test/integration/**/*.test.js' test/integration/teardown.test.js --recursive --timeout 20000 --slow 5000",
+    "test-unit": "mocha --file test/unit/setup.test.js \"test/unit/**/*.test.js\" --fail-zero",
+    "test-coverage": "nyc --reporter=text --reporter=html mocha --file test/unit/setup.test.js \"test/unit/**/*.test.js\" --fail-zero",
+    "test-integration": "mocha --file test/integration/setup.test.js \"test/integration/**/*.test.js\" test/integration/teardown.test.js --timeout 20000 --slow 5000 --fail-zero",
     "test": "npm run test-coverage && npm run verify-coverage && npm run test-integration"
   },
   "files": [
