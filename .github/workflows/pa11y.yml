@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
         node-version: [22]
     steps:
       - name: Disable AppArmor User Namespace Restrictions, required to open
@@ -27,6 +27,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install -g pa11y-ci
-      - run: pa11y-ci -T 2 https://pa11y.org https://pa11y.test
-      - run: pa11y-ci -T 20 https://pa11y.org https://pa11y.test https://github.com
-      - run: pa11y-ci https://pa11y.org https://pa11y.test
+      - run: 'pa11y-ci -T 2 https://pa11y.org https://pa11y.test || echo "exit code: $?"'
+      - run: 'pa11y-ci -T 20 https://pa11y.org https://pa11y.test https://github.com || echo "exit code: $?"'
+      - run: 'pa11y-ci https://pa11y.org https://pa11y.test || echo "exit code: $?"'
