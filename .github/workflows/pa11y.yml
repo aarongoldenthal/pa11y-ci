@@ -1,0 +1,31 @@
+on:
+  push:
+    branches:
+      - main
+      - test-pa11y
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  pa11y:
+    name: test on ${{ matrix.os }} with node ${{ matrix.node-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node-version: [22]
+    steps:
+      - name: Disable AppArmor User Namespace Restrictions, required to open
+          Chrome on Ubuntu 23.10+ without --no-sandbox). See
+          https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md.
+        run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+        if: runner.os == 'Linux'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install -g pa11y-ci
+      - run: pa11y-ci -T 2 https://pa11y.org https://pa11y.test
+      - run: pa11y-ci https://pa11y.org https://pa11y.test
