@@ -28,4 +28,5 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm install -g pa11y-ci
       - run: pa11y-ci -T 2 https://pa11y.org https://pa11y.test
+      - run: pa11y-ci -T 20 https://pa11y.org https://pa11y.test https://github.com
       - run: pa11y-ci https://pa11y.org https://pa11y.test
